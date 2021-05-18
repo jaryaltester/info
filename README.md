@@ -1,2 +1,2 @@
 # info
-Config files for my GitHub profile.
+Important Info for developers on daily use.
