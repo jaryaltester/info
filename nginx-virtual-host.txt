@@ -1,0 +1,46 @@
+
+How to create Virtual Host in Ubuntu :
+
+1. sudo mkdir -p /var/www/example.com/public_html
+
+2. sudo chown -R $USER:$USER /var/www/example.com/public_html
+
+3. sudo chmod -R 755 /var/www
+
+4. sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/example.com
+
+5. sudo nano /etc/nginx/sites-available/example.com
+
+  : In File -
+    
+      server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/example.com/public_html;
+
+        index index.php index.html;
+
+        server_name example.com;
+
+        location / {
+          try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+          include snippets/fastcgi-php.conf;
+          fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        }
+
+      }
+      
+6. sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+ 
+7. sudo nginx -t
+
+8. sudo systemctl restart nginx
+
+9. sudo nano /etc/hosts
+
+10. 127.0.0.1   example.com
+
